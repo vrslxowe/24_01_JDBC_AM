@@ -98,6 +98,8 @@ public class Main {
 				System.out.println("  번호  /   제목  ");
 				for (Article article : articles) {
 					System.out.printf("  %d     /   %s   \n", article.getId(), article.getTitle());
+					
+					
 				}
 			}
 
