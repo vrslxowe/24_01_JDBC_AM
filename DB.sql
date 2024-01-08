@@ -1,37 +1,3 @@
-package com.KoreaIT.java.JDBCAM.test;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-public class JDBCInsertTest {
-	public static void main(String[] args) {
-		Connection conn = null;
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			String url = "jdbc:mysql://127.0.0.1:3306/JDBC_AM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
-
-			conn = DriverManager.getConnection(url, "root", "");
-			System.out.println("연결 성공!");
-
-		} catch (ClassNotFoundException e) {
-			System.out.println("드라이버 로딩 실패");
-		} catch (SQLException e) {
-			System.out.println("에러 : " + e);
-		} finally {
-			try {
-				if (conn != null && !conn.isClosed()) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-
-	}
-}
-
 DROP DATABASE IF EXISTS `JDBC_AM`;
 CREATE DATABASE `JDBC_AM`;
 USE `JDBC_AM`;
@@ -47,35 +13,23 @@ CREATE TABLE article(
 SHOW TABLES;
 
 SELECT *
-FROM article;
+FROM article
+ORDER BY id DESC;
 
-
-INSERT INTO article
-SET regDate = NOW(),
-updateDate = NOW(),
-title = CONCAT('제목', RAND()),
-`body` = CONCAT('내용', RAND());
-
-DROP DATABASE IF EXISTS `JDBC_AM`;
-CREATE DATABASE `JDBC_AM`;
-USE `JDBC_AM`;
-
-CREATE TABLE article(
-    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    regDate DATETIME NOT NULL,
-    updateDate DATETIME NOT NULL,
-    title CHAR(100) NOT NULL,
-    `body` TEXT NOT NULL
-);
-
-SHOW TABLES;
 
 SELECT *
-FROM article;
+FROM article
+ORDER BY id DESC;
 
+INSERT INTO article SET regDate = NOW(),updateDate = NOW(),title = CONCAT('제목', RAND()),`body` = CONCAT('내용', RAND());
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 title = CONCAT('제목', RAND()),
 `body` = CONCAT('내용', RAND());
+
+UPDATE article
+SET updateDate = NOW(),
+title = 'abc'
+WHERE id = 6;
