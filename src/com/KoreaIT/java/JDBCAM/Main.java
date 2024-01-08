@@ -119,13 +119,6 @@ public class Main {
 						articles.add(article);
 
 					}
-//					for (int i = 0; i < articles.size(); i++) {
-//						System.out.println("번호 : " + articles.get(i).getId());
-//						System.out.println("등록 날짜 : " + articles.get(i).getRegDate());
-//						System.out.println("수정 날짜 : " + articles.get(i).getUpdateDate());
-//						System.out.println("제목 : " + articles.get(i).getTitle());
-//						System.out.println("내용 : " + articles.get(i).getBody());
-//					}
 
 				} catch (ClassNotFoundException e) {
 					System.out.println("드라이버 로딩 실패");
@@ -163,24 +156,72 @@ public class Main {
 				for (Article article : articles) {
 					System.out.printf("  %d     /   %s   \n", article.getId(), article.getTitle());
 				}
-				
-			} else if (cmd.equals("목록")) {
-					if (articles.size() == 0) {
-						System.out.println("등록 된 명언이 없어");
-					} else {
-						System.out.println("번호  /  작가  /  명언  ");
-						System.out.println("=".repeat(30));
+			} else if (cmd.startsWith("article modify")) {
 
-						for (int i = articles.size() - 1; i >= 0; i--) {
-							article articles = articles.get(i);
+				int id = 0;
 
-							System.out.printf("%d  /  %s  /  %s\n", articles.getId(), articles.getAuthor(), articles.getContent());
-						}
-
-					}
-				} else {
-					System.out.println("존재하지 않는 명령어입니다");
+				try {
+					id = Integer.parseInt(cmd.split(" ")[2]);
+				} catch (Exception e) {
+					System.out.println("번호는 정수로 입력해");
+					continue;
 				}
+
+				System.out.println("==수정==");
+				System.out.print("새 제목 : ");
+				String title = sc.nextLine().trim();
+				System.out.println("새 내용 : ");
+				String body = sc.nextLine().trim();
+
+				Connection conn = null;
+				PreparedStatement pstmt = null;
+
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					String url = "jdbc:mysql://127.0.0.1:3306/JDBC_AM?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
+
+					conn = DriverManager.getConnection(url, "root", "");
+					System.out.println("연결 성공!");
+
+					String sql = "UPDATE article";
+					sql += " SET updateDate = NOW()";
+					if (title.length() > 0) {
+						sql += " ,title = '" + title + "'";
+					}
+					if (body.length() > 0) {
+						sql += " ,`body` = '" + body + "'";
+					}
+					sql += " WHERE id = " + id + ";";
+
+					System.out.println(sql);
+
+					pstmt = conn.prepareStatement(sql);
+
+					pstmt.executeUpdate();
+
+				} catch (ClassNotFoundException e) {
+					System.out.println("드라이버 로딩 실패");
+				} catch (SQLException e) {
+					System.out.println("에러 : " + e);
+				} finally {
+					try {
+						if (pstmt != null && !pstmt.isClosed()) {
+							pstmt.close();
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+					try {
+						if (conn != null && !conn.isClosed()) {
+							conn.close();
+						}
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println(id + "번 글이 수정되었습니다.");
+			}
+
 		}
 
 		System.out.println("==프로그램 종료==");
