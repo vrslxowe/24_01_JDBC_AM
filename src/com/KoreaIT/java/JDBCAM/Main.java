@@ -163,8 +163,24 @@ public class Main {
 				for (Article article : articles) {
 					System.out.printf("  %d     /   %s   \n", article.getId(), article.getTitle());
 				}
-			}
+				
+			} else if (cmd.equals("목록")) {
+					if (articles.size() == 0) {
+						System.out.println("등록 된 명언이 없어");
+					} else {
+						System.out.println("번호  /  작가  /  명언  ");
+						System.out.println("=".repeat(30));
 
+						for (int i = articles.size() - 1; i >= 0; i--) {
+							article articles = articles.get(i);
+
+							System.out.printf("%d  /  %s  /  %s\n", articles.getId(), articles.getAuthor(), articles.getContent());
+						}
+
+					}
+				} else {
+					System.out.println("존재하지 않는 명령어입니다");
+				}
 		}
 
 		System.out.println("==프로그램 종료==");
