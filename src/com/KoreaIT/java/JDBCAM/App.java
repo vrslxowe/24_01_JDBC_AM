@@ -10,7 +10,10 @@ import java.util.Scanner;
 
 import com.KoreaIT.java.JDBCAM.util.DBUtil;
 import com.KoreaIT.java.JDBCAM.util.SecSql;
+<<<<<<< HEAD
 import com.KoreaIT.java.JDBCAM.util.Util;
+=======
+>>>>>>> 090f4e354c1eb73a233740196910820cb2f8e334
 
 public class App {
 
@@ -81,6 +84,38 @@ public class App {
 			int id = DBUtil.insert(conn, sql);
 
 			System.out.println(id + "번 글이 생성되었습니다");
+<<<<<<< HEAD
+=======
+
+//			PreparedStatement pstmt = null;
+//
+//			try {
+//				String sql = "INSERT INTO article ";
+//				sql += "SET regDate = NOW(),";
+//				sql += "updateDate = NOW(),";
+//				sql += "title = '" + title + "',";
+//				sql += "`body`= '" + body + "';";
+//
+//				System.out.println(sql);
+//
+//				pstmt = conn.prepareStatement(sql);
+//
+//				int affectedRow = pstmt.executeUpdate();
+//
+//				System.out.println(affectedRow + "열에 적용됨");
+//
+//			} catch (SQLException e) {
+//				System.out.println("에러 2: " + e);
+//			} finally {
+//				try {
+//					if (pstmt != null && !pstmt.isClosed()) {
+//						pstmt.close();
+//					}
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//			}
+>>>>>>> 090f4e354c1eb73a233740196910820cb2f8e334
 
 		} else if (cmd.equals("article list")) {
 			System.out.println("==목록==");
@@ -99,6 +134,53 @@ public class App {
 				articles.add(new Article(articleMap));
 			}
 
+<<<<<<< HEAD
+=======
+//			PreparedStatement pstmt = null;
+//			ResultSet rs = null;
+//			try {
+//				String sql = "SELECT *";
+//				sql += " FROM article";
+//				sql += " ORDER BY id DESC;";
+//
+//				System.out.println(sql);
+//
+//				pstmt = conn.prepareStatement(sql);
+//
+//				rs = pstmt.executeQuery(sql);
+//
+//				while (rs.next()) {
+//					int id = rs.getInt("id");
+//					String regDate = rs.getString("regDate");
+//					String updateDate = rs.getString("updateDate");
+//					String title = rs.getString("title");
+//					String body = rs.getString("body");
+//
+//					Article article = new Article(id, regDate, updateDate, title, body);
+//
+//					articles.add(article);
+//				}
+//
+//			} catch (SQLException e) {
+//				System.out.println("에러 3 : " + e);
+//			} finally {
+//				try {
+//					if (rs != null && !rs.isClosed()) {
+//						rs.close();
+//					}
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//				try {
+//					if (pstmt != null && !pstmt.isClosed()) {
+//						pstmt.close();
+//					}
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//
+//			}
+>>>>>>> 090f4e354c1eb73a233740196910820cb2f8e334
 			if (articles.size() == 0) {
 				System.out.println("게시글이 없습니다");
 				return 0;
@@ -138,12 +220,17 @@ public class App {
 			System.out.println("새 내용 : ");
 			String body = sc.nextLine().trim();
 
+<<<<<<< HEAD
 			sql = new SecSql();
+=======
+			SecSql sql = new SecSql();
+>>>>>>> 090f4e354c1eb73a233740196910820cb2f8e334
 
 			sql.append("UPDATE article");
 			sql.append("SET updateDate = NOW()");
 			if (title.length() > 0) {
 				sql.append(",title = ?", title);
+<<<<<<< HEAD
 			}
 			if (body.length() > 0) {
 				sql.append(",`body`= ?", body);
@@ -219,6 +306,48 @@ public class App {
 			DBUtil.delete(conn, sql);
 
 			System.out.println(id + "번 글이 삭제되었습니다.");
+=======
+			}
+			if (body.length() > 0) {
+				sql.append(",`body`= ?", body);
+			}
+			sql.append("WHERE id = ?;", id);
+
+			DBUtil.update(conn, sql);
+
+//			PreparedStatement pstmt = null;
+//
+//			try {
+//				String sql = "UPDATE article";
+//				sql += " SET updateDate = NOW()";
+//				if (title.length() > 0) {
+//					sql += " ,title = '" + title + "'";
+//				}
+//				if (body.length() > 0) {
+//					sql += " ,`body` = '" + body + "'";
+//				}
+//				sql += " WHERE id = " + id + ";";
+//
+//				System.out.println(sql);
+//
+//				pstmt = conn.prepareStatement(sql);
+//
+//				pstmt.executeUpdate();
+//
+//			} catch (SQLException e) {
+//				System.out.println("에러 4 : " + e);
+//			} finally {
+//				try {
+//					if (pstmt != null && !pstmt.isClosed()) {
+//						pstmt.close();
+//					}
+//				} catch (SQLException e) {
+//					e.printStackTrace();
+//				}
+//
+//			}
+			System.out.println(id + "번 글이 수정되었습니다.");
+>>>>>>> 090f4e354c1eb73a233740196910820cb2f8e334
 		}
 
 		return 0;

@@ -33,6 +33,7 @@ public class Article {
 		this.body = (String) articleMap.get("body");
 	}
 
+<<<<<<< HEAD
 	public LocalDateTime getRegDate() {
 		return regDate;
 	}
@@ -41,6 +42,8 @@ public class Article {
 		return updateDate;
 	}
 
+=======
+>>>>>>> 090f4e354c1eb73a233740196910820cb2f8e334
 	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
