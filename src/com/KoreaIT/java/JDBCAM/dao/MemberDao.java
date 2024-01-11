@@ -46,4 +46,9 @@ public class MemberDao {
 		return DBUtil.insert(Container.conn, sql);
 	}
 
+	public static Object getName() {
+	
+		return null;
+	}
+
 }
